@@ -1,0 +1,12 @@
+# Ficheros de Java
+*.class
+*.log
+*.jar
+*.war
+
+# Ficheros de JUnit
+TEST-*.xml
+*.exec
+
+# VS Code
+.vscode/
