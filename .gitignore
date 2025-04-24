@@ -4,6 +4,9 @@
 *.jar
 *.war
 
+# Ficheros de Maven
+/target/
+
 # Ficheros de JUnit
 TEST-*.xml
 *.exec
