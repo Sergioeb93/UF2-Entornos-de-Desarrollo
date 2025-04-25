@@ -22,7 +22,6 @@ public class Vehiculo {
     private int numPasajerosActual;
     private int ultimaRevisionITV;  //Se registra únicamente el año de la última revisión
     private int periodoRevisionITV; //En número de años de vigencia desde la última revisión
-    private String modoConduccion;
     final private String matricula;
 
     // ----- | --------------- Constructores ----------------- | -----
