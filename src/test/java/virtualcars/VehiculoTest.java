@@ -141,11 +141,36 @@ class VehiculoTest {
 
         @Test
         @DisplayName("Intentar cargar la batería de un vehículo de combustible")
-        void cargarVehículoCombustible() {
+        void cargarVehiculoCombustible() {
             assertThrows(UnsupportedOperationException.class, () -> {
                 vehiculo.cargarBateria(20); // Se intenta cargar la batería de un coche de combustible, lo que debe lanzar una excepción.
             }); 
         } 
+        
+        @Test
+        @DisplayName("Repostaje estándar del combustible del vehículo")
+        void repostarVehiculo() {
+            vehiculo.setCombustibleActual(10); 
+            vehiculo.repostar(15, "diesel"); 
+            assertEquals(25, vehiculo.getCombustibleActual()); 
+        } 
+
+        @Test
+        @DisplayName("Repostaje superior al máximo de la capacidad del vehículo")
+        void repostarVehiculoSuperiorAlMax() {
+            vehiculo.setCombustibleActual(vehiculo.getCombustibleMax()); 
+            vehiculo.repostar(30, "diesel"); 
+            assertEquals(vehiculo.getCombustibleMax(), vehiculo.getCombustibleActual()); // El combustible actual del vehículo no podrá superar la capacidad máxima
+        }  
+
+        @Test
+        @DisplayName("Repostaje del tipo de combustible incorrecto")
+        void repostarCombustibleIncorrecto() {
+            vehiculo.setCombustibleActual(15); 
+            vehiculo.setTipoCombustible("diesel");
+            vehiculo.repostar(30, "gasolina"); //Se reposta el vehículo con un tipo de combustible incorrecto
+            assertTrue(vehiculo.isEsAveriado()); // El vehículo se avería por utilizar un combustible incorrecto
+        }  
     }
 
     // ---------------------------------------------
@@ -202,6 +227,14 @@ class VehiculoTest {
             vehiculoElectrico.cargarBateria(vehiculoElectrico.getBateriaMax() + 15); // Se intenta cargar la batería por encima del valor máximo de la misma
             assertEquals(vehiculoElectrico.getBateriaMax(), vehiculoElectrico.getBateriaActual()); // La batería actual del vehículo no podrá superar la batería máxima
         }  
+
+        @Test
+        @DisplayName("Intentar repostar un vehículo eléctrico")
+        void repostarVehiculoElectrico() {
+            assertThrows(UnsupportedOperationException.class, () -> {
+                vehiculoElectrico.repostar(15, "diesel"); // Se intenta repostar el combustible de un vehículo eléctrico, lo que debe lanzar una excepción.
+            }); 
+        } 
     }
 
     // ---------------------------------------------

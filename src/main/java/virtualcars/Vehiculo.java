@@ -281,9 +281,13 @@ public class Vehiculo {
         cargarBateria(cargaRecuperada); // Se regenera un porcentaje de la energía cinética del coche en el momento de ejecutar el frenado
     }
 
-    public void repostar(int litros) {
+    public void repostar(int litros, String tipoCombustible) {
+        if (this.esElectrico) throw new UnsupportedOperationException("Se trata de un vehículo eléctrico, no se puede repostar combustible.");
         this.combustibleActual += litros;
-        // TODO: Terminar de implementar método repostar
+
+        if (this.combustibleActual > combustibleMax) this.combustibleActual = combustibleMax; // En caso de superar el máximo, combustibleActual = combustibleMax
+
+        if (tipoCombustible.toLowerCase() != this.tipoCombustible.toLowerCase()) this.esAveriado = true;
     } 
 
     public void cargarBateria(int carga) {
