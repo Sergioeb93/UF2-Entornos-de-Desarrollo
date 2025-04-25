@@ -1,0 +1,23 @@
+name: Run VirtualCars Tests
+
+on:
+  pull_request:
+    branches: [ main ]  
+
+jobs:
+  Test_VirtualCars:
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: echo "Iniciando ejecución de Test de Virtual Cars... 🚀"
+      - name: Checkout del código del repositorio
+        uses: actions/checkout@v3
+
+      - name: Set up del JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin' 
+          java-version: '17'
+
+      - name: Ejecución de los Test con Maven
+        run: mvn clean test && echo "La ejecución de los Test ha finalizado correctamente."
