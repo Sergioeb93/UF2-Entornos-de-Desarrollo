@@ -22,6 +22,7 @@ public class Vehiculo {
     private int numPasajerosActual;
     private int ultimaRevisionITV;  //Se registra únicamente el año de la última revisión
     private int periodoRevisionITV; //En número de años de vigencia desde la última revisión
+    private String modoConduccion;
     final private String matricula;
 
     // ----- | --------------- Constructores ----------------- | -----
@@ -287,9 +288,20 @@ public class Vehiculo {
     } 
 
     public void cambiarModoConduccion(String modo) {
-        this.modoConduccion = modo;
-        // TODO: Terminar de implementar método cambiarModoConduccion
-    } 
+        if (modo.equals("ECO") || modo.equals("NORMAL") || modo.equals("SPORT")) {
+            this.modoConduccion = modo;
+        } else {
+            throw new IllegalArgumentException("Modo de conducción no válido.");
+        }
+    }
+    
+    public void activarModoEco() {
+        if (!esActivo) {
+            throw new IllegalStateException("El vehículo está apagado, no se puede activar el modo ECO.");
+        }
+        this.modoConduccion = "ECO";
+    }
+
 
     public void calcularAutonomia() {
         // TODO: Implementar método calcularAutonomia

@@ -65,6 +65,62 @@ class VehiculoTest {
         }
     }
 
+    @Nested
+    @DisplayName("Tests sobre el cambio de modo de conducción")
+    class TestCambioModoConduccion {
+
+        @Test
+        @DisplayName("Cambiar modo de conducción a SPORT")
+        void testCambiarModoConduccionSport() {
+            vehiculo.cambiarModoConduccion("SPORT");
+            assertEquals("SPORT", vehiculo.getModoConduccion(), "El modo de conducción debería ser SPORT.");
+        }
+
+        @Test
+        @DisplayName("Cambiar modo de conducción a ECO")
+        void testCambiarModoConduccionEco() {
+            vehiculo.cambiarModoConduccion("ECO");
+            assertEquals("ECO", vehiculo.getModoConduccion(), "El modo de conducción debería ser ECO.");
+        }
+
+        @Test
+        @DisplayName("Cambiar modo de conducción a NORMAL")
+        void testCambiarModoConduccionNormal() {
+            vehiculo.cambiarModoConduccion("NORMAL");
+            assertEquals("NORMAL", vehiculo.getModoConduccion(), "El modo de conducción debería ser NORMAL.");
+        }
+
+        @Test
+        @DisplayName("Cambiar a un modo de conducción no válido")
+        void testCambiarModoConduccionInvalido() {
+            assertThrows(IllegalArgumentException.class, () -> {
+                vehiculo.cambiarModoConduccion("INVALIDO");
+            }, "Debería lanzar una excepción por un modo de conducción no válido.");
+        }
+    }
+
+    // ---------------------------------------------
+    @Nested
+    @DisplayName("Tests sobre el modo ECO")
+    class TestModoEco {
+
+        @Test
+        @DisplayName("Activar el modo ECO")
+        void testActivarModoEco() {
+            vehiculo.activarModoEco();
+            assertEquals("ECO", vehiculo.getModoConduccion(), "El modo de conducción debería ser ECO.");
+        }
+
+        @Test
+        @DisplayName("Activar el modo ECO con coche apagado")
+        void testActivarModoEcoCocheApagado() {
+            vehiculo.setEsActivo(false); // Desactivar el coche
+            assertThrows(IllegalStateException.class, () -> {
+                vehiculo.activarModoEco(); // Debería lanzar una excepción porque el coche está apagado
+            });
+        }
+    }
+
     // ---------------------------------------------
     @Nested
     @DisplayName("Tests específicos para vehículo de combustible")
