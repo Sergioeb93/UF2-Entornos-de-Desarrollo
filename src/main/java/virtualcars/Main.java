@@ -19,21 +19,53 @@ public class Main {
         System.out.print("Color: ");
         String color = scanner.nextLine();
 
-        System.out.print("¿Es eléctrico? (true/false): ");
-        boolean esElectrico = Boolean.parseBoolean(scanner.nextLine());
-
         System.out.println("Año de fabricación: ");
         int añoFabricacion = Integer.parseInt(scanner.nextLine());
 
-        //TODO: Finalizar la incorporación de sentencias con los parámetros que se añadan a la clase vehículo
-        
+        System.out.println("Número de plazas: ");
+        int numPlazas = Integer.parseInt(scanner.nextLine());
+
+        System.out.println("Velocidad máxima del vehículo: ");
+        int velocidadMax = Integer.parseInt(scanner.nextLine());
+
+        System.out.println("Consumo por kilómetro (en litros o porcentaje de bateria): ");
+        int consumoPorKm = Integer.parseInt(scanner.nextLine());
+
+        System.out.println("Kilometraje actual: ");
+        int kmRecorridos = Integer.parseInt(scanner.nextLine());
+
+        System.out.println("Año de la última revisión de la ITV: ");
+        int ultimaRevisionITV = Integer.parseInt(scanner.nextLine());
+
+        System.out.println("Años para renovación de la ITV: ");
+        int periodoRevisionITV = Integer.parseInt(scanner.nextLine());
+
+        System.out.print("¿Es eléctrico? (si/no): ");
+        String esElectrico = scanner.nextLine().trim().toLowerCase();
+
+        Vehiculo vehiculo;
+
+        if (esElectrico.equals("no")) {
+            System.out.println("Capacidad máxima del depósito: ");
+            int combustibleMax = Integer.parseInt(scanner.nextLine());
+
+
+            System.out.println("Tipo de combustible(diesel/gasolina): ");
+            String tipoCombustible = scanner.nextLine();
+
+            vehiculo = new Vehiculo(marca, modelo, color, velocidadMax, combustibleMax, tipoCombustible, 
+                                    consumoPorKm, kmRecorridos, añoFabricacion, numPlazas, ultimaRevisionITV, periodoRevisionITV);
+        }
+
+        else {
+            vehiculo = new Vehiculo(marca, modelo, color, velocidadMax,consumoPorKm, kmRecorridos, 
+                                    añoFabricacion, numPlazas, ultimaRevisionITV, periodoRevisionITV);
+        }
+
         scanner.close(); 
 
-        //TODO: Implementar cuando se termine de definir la clase vehículo
-        //Vehiculo vehiculo = new Vehiculo(marca, modelo, color, esElectrico, añoFabricacion, tipoCombustible,[...]);
-
         System.out.println("\n=== Información del vehículo registrado ===");
-        //vehiculo.fichaTecnica();
+        System.out.println(vehiculo.generarFichaTecnica());
 
     }
 }
