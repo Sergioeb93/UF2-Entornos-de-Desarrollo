@@ -268,12 +268,14 @@ public class Vehiculo {
     }
 
     public void frenar() {
+        int velocidadPreFrenado = this.velocidadActual;
         this.velocidadActual = 0;
-        // TODO: Terminar de implementar método frenar
+        if (this.esElectrico && isEsActivo()) activarFrenoRegenerativo(velocidadPreFrenado); // Se ejecuta el freno regenerativo en caso de que el coche sea eléctrico y el motor esté encendido
     }
 
-    public void activarFrenoRegenerativo() {
-        // TODO: Implementar método activarFrenoRegenerativo
+    public void activarFrenoRegenerativo(int velocidadReducida) { 
+        int cargaRecuperada = (int)(0.02 * velocidadReducida);
+        cargarBateria(cargaRecuperada); // Se regenera un porcentaje de la energía cinética del coche en el momento de ejecutar el frenado
     }
 
     public void repostar(int litros) {
