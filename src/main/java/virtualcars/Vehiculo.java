@@ -29,7 +29,9 @@ public class Vehiculo {
     } 
 
     public void decelerar(int velocidad) {
-        this.velocidadActual -= velocidad;
+        if (!esActivo) throw new IllegalStateException("El vehículo está apagado, no puede decelerar.");
+
+        this.velocidadActual = Math.max(0, this.velocidadActual - velocidad); // En caso de ser inferior a 0, se establece en 0.
     }
 
     public void apagar() {
