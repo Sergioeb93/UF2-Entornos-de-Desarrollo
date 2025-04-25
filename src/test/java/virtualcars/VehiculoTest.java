@@ -70,7 +70,7 @@ class VehiculoTest {
         }       
     }
 
-        @Nested
+    @Nested
     @DisplayName("Tests sobre el cambio de modo de conducción")
     class TestCambioModoConduccion {
 
