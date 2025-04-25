@@ -1,9 +1,15 @@
 package virtualcars;
 
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.*;
-
-import virtualcars.Vehiculo;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 
 class VehiculoTest {
 
@@ -132,6 +138,14 @@ class VehiculoTest {
             vehiculo.frenar(); 
             assertEquals(0, vehiculo.getVelocidadActual()); // La velocidad actual del vehículo se reduce a 0
         }
+
+        @Test
+        @DisplayName("Intentar cargar la batería de un vehículo de combustible")
+        void cargarVehículoCombustible() {
+            assertThrows(UnsupportedOperationException.class, () -> {
+                vehiculo.cargarBateria(20); // Se intenta cargar la batería de un coche de combustible, lo que debe lanzar una excepción.
+            }); 
+        } 
     }
 
     // ---------------------------------------------
@@ -172,6 +186,22 @@ class VehiculoTest {
                 () -> assertEquals(80, vehiculoElectrico.getBateriaActual(), "La cantidad de batería actual deberá ser igual al nivel de batería prefrenado, sin activación del freno regenerativo.")
             );                                              
         }
+
+        @Test
+        @DisplayName("Carga estándar de la batería del vehículo")
+        void cargarVehiculo() {
+            vehiculoElectrico.setBateriaActual(80); 
+            vehiculoElectrico.cargarBateria(15); // Se carga la batería
+            assertEquals(95, vehiculoElectrico.getBateriaActual()); 
+        } 
+
+        @Test
+        @DisplayName("Carga superior al máximo de la batería del vehículo")
+        void cargarVehiculoSuperiorAlMax() {
+            vehiculoElectrico.setBateriaActual(100);
+            vehiculoElectrico.cargarBateria(vehiculoElectrico.getBateriaMax() + 15); // Se intenta cargar la batería por encima del valor máximo de la misma
+            assertEquals(vehiculoElectrico.getBateriaMax(), vehiculoElectrico.getBateriaActual()); // La batería actual del vehículo no podrá superar la batería máxima
+        }  
     }
 
     // ---------------------------------------------
