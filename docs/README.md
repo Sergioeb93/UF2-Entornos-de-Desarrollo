@@ -50,6 +50,7 @@ Este proyecto implementa un sistema de gestión para el registro de un vehículo
 | **pasarITV()**                         | Actualiza el año de la última revisión de la ITV al actual.                     |
 | **verificarITV()**                     | Verifica si la ITV se encuentra actualmente caducada.                           |
 | **generarMatricula()**                 | Genera de manera aleatoria una matrícula durante la creación del objeto.        | 
+| **generarFichaTecnica()**              | Imprime información relevante sobre los datos del vehículo, en formato legible. |
 
 ## Notas de Implementación
 - Todos los atributos tendrán sus respectivos getters y setters.

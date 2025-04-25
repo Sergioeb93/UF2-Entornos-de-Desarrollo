@@ -1,5 +1,7 @@
 package virtualcars;
 
+import java.util.Random;
+
 public class Vehiculo {
     private String marca; 
     private String modelo; 
@@ -311,8 +313,17 @@ public class Vehiculo {
     }
 
     private String generarMatricula() {
-        // TODO: Implementar método generarMatricula
-        return matricula;
+        Random rand = new Random();
+        String matriculaAleatoria = "";
+        
+        for (int i = 0; i < 6; i++) { 
+            if (i % 2 == 0) {
+                matriculaAleatoria += (char)(rand.nextInt(26) + 'A');
+                matriculaAleatoria += rand.nextInt(10);
+            }
+        }
+
+        return matriculaAleatoria;
     }
 
     public String generarFichaTecnica() {
