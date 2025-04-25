@@ -1,9 +1,6 @@
 package virtualcars;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.*;
 
 import virtualcars.Vehiculo;
@@ -64,7 +61,7 @@ class VehiculoTest {
             vehiculo.setVelocidadActual(20); 
             vehiculo.decelerar(vehiculo.getVelocidadActual() + 1); // Se reduce la velocidad por debajo del valor de velocidadActual
             assertEquals(0, vehiculo.getVelocidadActual()); // La velocidad mínima del vehículo ha de mantenerse en 0, nunca podrá ser negativa
-        }
+        }       
     }
 
     @Nested
@@ -127,12 +124,105 @@ class VehiculoTest {
     @Nested
     @DisplayName("Tests específicos para vehículo de combustible")
     class TestVehiculoCombustible {
+
+        @Test
+        @DisplayName("Frenado estándar de vehículo de combustible")
+        void frenarCocheCombustible() {
+            vehiculo.setVelocidadActual(100); 
+            vehiculo.frenar(); 
+            assertEquals(0, vehiculo.getVelocidadActual()); // La velocidad actual del vehículo se reduce a 0
+        }
     }
 
     // ---------------------------------------------
     @Nested
     @DisplayName("Tests específicos para vehículo eléctrico")
     class TestVehiculoElectrico {
+
+        Vehiculo vehiculoElectrico;
+
+        @BeforeEach
+        void setUp() {
+            vehiculoElectrico = new Vehiculo("Tesla", "Model X", "Gris", 250,
+                                            20, 0, 2023, 6, 2023, 4);
+            vehiculoElectrico.setEsActivo(true);
+        }
+
+        @Test
+        @DisplayName("Frenado de vehículo eléctrico con motor encendido:")
+        void frenarCocheEléctricoEncendido() {
+            vehiculoElectrico.setVelocidadActual(120); //velocidadPreFrenado será 120
+            vehiculoElectrico.setBateriaActual(80); // El nivel de bateriaActual pre frenado será 80
+            vehiculoElectrico.frenar(); // El motor está encendido, se debe ejecutar el freno regenerativo
+            assertAll("Verificando el estado del vehículo eléctrico tras el freno:",
+                () -> assertEquals(0, vehiculoElectrico.getVelocidadActual(), "Velocidad del vehículo reducida a 0 tras frenado."),
+                () -> assertEquals(82, vehiculoElectrico.getBateriaActual(), "La cantidad de batería actual deberá ser 82, tras la activación del freno regenerativo.") // (80 + (int)(0.02 * 120) = 82
+            );      
+        }
+
+        @Test
+        @DisplayName("Frenado de vehículo eléctrico con motor apagado:")
+        void frenarCocheEléctricoApagado() {
+            vehiculoElectrico.setVelocidadActual(120); //velocidadPreFrenado será 120
+            vehiculoElectrico.setBateriaActual(80); // El nivel de bateriaActual pre frenado será 80
+            vehiculoElectrico.apagar(); // Se apaga el motor del coche en marcha, a partir de este momento sólo funcionarán los frenos tradicionales de disco/mano
+            vehiculoElectrico.frenar(); // El motor está apagado, no se debe ejecutar el freno regenerativo
+            assertAll("Verificando el estado del vehículo eléctrico tras el freno:",
+                () -> assertEquals(0, vehiculoElectrico.getVelocidadActual(), "Velocidad del vehículo reducida a 0 tras frenado."),
+                () -> assertEquals(80, vehiculoElectrico.getBateriaActual(), "La cantidad de batería actual deberá ser igual al nivel de batería prefrenado, sin activación del freno regenerativo.")
+            );                                              
+        }
+    }
+
+    // ---------------------------------------------
+    @Nested
+    @DisplayName("Tests sobre la matrícula del vehículo")
+    class TestMatricula {
+
+        @Test
+        @DisplayName("Generar una matrícula durante la construcción del objeto")
+        void generarMatricula() {
+            assertNotNull(vehiculo.getMatricula()); // El constructor del vehículo debe haber generado una matrícula automáticamente.
+        }
+
+        @Test
+        @DisplayName("Verificar la longitud y el formato de la matrícula generada")
+        void verificarFormatoMatricula() {
+            assertAll("Verificando el formato de la matrícula generada:",
+                () -> assertEquals(6, vehiculo.getMatricula().length(), "La longitud de la matrícula generada debe ser de 6 caracteres."),
+                () -> assertTrue(vehiculo.getMatricula().matches("([A-Z][0-9]){3}"), "La matrícula debe estar conformada por 3 letras y 3 dígitos intercalados.")
+            );   
+        }
+
+    }
+
+    // ---------------------------------------------
+    @Nested
+    @DisplayName("Tests sobre la gestión de la ITV del vehículo")
+    class TestITV {
+
+        @Test
+        @DisplayName("Actualizar la ITV del vehículo")
+        void actualizarITV() {
+            vehiculo.setUltimaRevisionITV(2018);
+            vehiculo.pasarITV();
+            assertEquals(2025, vehiculo.getUltimaRevisionITV());
+        }
+
+        @DisplayName("Verificar un vehículo con la ITV en rigor")
+        void verificarITVActualizada() {
+            vehiculo.setUltimaRevisionITV(2023);
+            vehiculo.setPeriodoRevisionITV(5);
+            assertTrue(vehiculo.verificarITV());
+        }
+
+        @Test
+        @DisplayName("Verificar un vehículo con la ITV caducada")
+        void verificarTIVCaducada() {
+            vehiculo.setUltimaRevisionITV(2015);
+            vehiculo.setPeriodoRevisionITV(3);
+            assertFalse(vehiculo.verificarITV());
+        }
 
     }
 

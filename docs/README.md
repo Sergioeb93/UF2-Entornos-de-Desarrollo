@@ -50,11 +50,13 @@ Este proyecto implementa un sistema de gestión para el registro de un vehículo
 | **pasarITV()**                         | Actualiza el año de la última revisión de la ITV al actual.                     |
 | **verificarITV()**                     | Verifica si la ITV se encuentra actualmente caducada.                           |
 | **generarMatricula()**                 | Genera de manera aleatoria una matrícula durante la creación del objeto.        | 
+| **generarFichaTecnica()**              | Imprime información relevante sobre los datos del vehículo, en formato legible. |
 
 ## Notas de Implementación
 - Todos los atributos tendrán sus respectivos getters y setters.
 - El modo ECO prioriza la eficiencia sobre el rendimiento.
 - El freno regenerativo se activa automáticamente en frenadas para los coches eléctricos.
+- El freno regenerativo sólo se activa en caso de que el motor se encuentre encendido. En caso contrario, sólo se dispone de freno manual/disco.
 - La matrícula deberá generarse de manera aleatoria con una extensión de 6 caracteres alfanuméricos.
 - El número de pasajeros del vehículo no podrá, en ningún caso, superar el número máximo de plazas del mismo.
 - Un coche averiado NO podrá circular bajo ningún pretexto.

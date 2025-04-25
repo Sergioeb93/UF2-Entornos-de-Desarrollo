@@ -1,5 +1,8 @@
 package virtualcars;
 
+import java.time.LocalDate;
+import java.util.Random;
+
 public class Vehiculo {
     private String marca; 
     private String modelo; 
@@ -268,12 +271,14 @@ public class Vehiculo {
     }
 
     public void frenar() {
+        int velocidadPreFrenado = this.velocidadActual;
         this.velocidadActual = 0;
-        // TODO: Terminar de implementar método frenar
+        if (this.esElectrico && isEsActivo()) activarFrenoRegenerativo(velocidadPreFrenado); // Se ejecuta el freno regenerativo en caso de que el coche sea eléctrico y el motor esté encendido
     }
 
-    public void activarFrenoRegenerativo() {
-        // TODO: Implementar método activarFrenoRegenerativo
+    public void activarFrenoRegenerativo(int velocidadReducida) { 
+        int cargaRecuperada = (int)(0.02 * velocidadReducida);
+        cargarBateria(cargaRecuperada); // Se regenera un porcentaje de la energía cinética del coche en el momento de ejecutar el frenado
     }
 
     public void repostar(int litros) {
@@ -312,16 +317,34 @@ public class Vehiculo {
     } 
 
     public void pasarITV() {
-        // TODO: Implementar método pasarITV
+        this.ultimaRevisionITV = LocalDate.now().getYear();
     } 
 
-    public void verificarITV() {
-        // TODO: Implementar método verificarITV
+    public boolean verificarITV() {
+        int añoActual = LocalDate.now().getYear();
+        if ((añoActual - this.ultimaRevisionITV ) > this.periodoRevisionITV) {
+            System.out.println("La ITV del vehículo se encuentra caducada. Es necesario realizar pasar la ITV lo antes posible.");
+            return false;
+        } 
+        else
+        {
+            System.out.println("La ITV del vehículo se encuentra en regla.");
+            return true;
+        }
     }
 
     private String generarMatricula() {
-        // TODO: Implementar método generarMatricula
-        return matricula;
+        Random rand = new Random();
+        String matriculaAleatoria = "";
+        
+        for (int i = 0; i < 6; i++) { 
+            if (i % 2 == 0) {
+                matriculaAleatoria += (char)(rand.nextInt(26) + 'A');
+                matriculaAleatoria += rand.nextInt(10);
+            }
+        }
+
+        return matriculaAleatoria;
     }
 
     public String generarFichaTecnica() {
