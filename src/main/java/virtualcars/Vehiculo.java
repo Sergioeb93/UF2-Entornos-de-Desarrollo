@@ -37,7 +37,7 @@ public class Vehiculo {
         this.velocidadMax = velocidadMax;
         this.esElectrico = false;
         this.combustibleMax = combustibleMax;
-        this.tipoCombustible = tipoCombustible;
+        this.tipoCombustible = tipoCombustible.toLowerCase();
         this.consumoPorKm = consumoPorKm;
         this.kmRecorridos = kmRecorridos;
         this.añoFabricacion = añoFabricacion;

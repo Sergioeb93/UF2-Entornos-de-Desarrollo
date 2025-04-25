@@ -41,7 +41,7 @@ public class Main {
         int periodoRevisionITV = Integer.parseInt(scanner.nextLine());
 
         System.out.print("¿Es eléctrico? (si/no): ");
-        String esElectrico = scanner.nextLine().trim().toLowerCase();;
+        String esElectrico = scanner.nextLine().trim().toLowerCase();
 
         Vehiculo vehiculo;
 
@@ -51,7 +51,7 @@ public class Main {
 
 
             System.out.println("Tipo de combustible(diesel/gasolina): ");
-            String tipoCombustible = scanner.nextLine().toLowerCase();
+            String tipoCombustible = scanner.nextLine();
 
             vehiculo = new Vehiculo(marca, modelo, color, velocidadMax, combustibleMax, tipoCombustible, 
                                     consumoPorKm, kmRecorridos, añoFabricacion, numPlazas, ultimaRevisionITV, periodoRevisionITV);
