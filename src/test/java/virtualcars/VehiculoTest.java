@@ -289,4 +289,46 @@ class VehiculoTest {
 
     }
 
+
+    // ---------------------------------------------
+    @Nested
+    @DisplayName("Test sobre el arranque y el apagado del motor")
+    class TestArranqueYApagadoMotor {
+
+        @DisplayName("Arrancar un vehículo en condiciones normales")
+        void arrancarVehiculo() {
+            vehiculo.setEsActivo(false);
+            vehiculo.arrancar();
+            assertTrue(vehiculo.isEsActivo());
+        }
+
+        @DisplayName("Arrancar un vehículo averiado")
+        void arrancarVehiculoAveriado() {
+            vehiculo.setEsAveriado(true);
+            vehiculo.arrancar();
+            assertThrows(IllegalStateException.class, () -> {
+                vehiculo.arrancar(); // Se intenta arrancar un vehículo averiado, habiendo de generar una excepción
+            });     
+        }
+
+        @DisplayName("Apagar el motor en condiciones normales")
+        void apagarMotorEncendido() {
+            vehiculo.setEsActivo(true);
+            vehiculo.apagar();
+            assertFalse(vehiculo.isEsActivo());
+            assertAll("Verificando el apagado del motor:",
+                () -> assertFalse(vehiculo.isEsActivo(), "El estado del vehículo debe pasar a inactivo."),
+                () -> assertEquals(0, vehiculo.getVelocidadActual(), "La velocidad actual del vehículo debe reducirse a 0.")
+            );   
+        }
+
+        @DisplayName("Apagar el motor de un coche que no estaba arrancado")
+        void apagarMotorNoArrancado() {
+            vehiculo.setEsActivo(false);
+            assertThrows(IllegalStateException.class, () -> {
+                vehiculo.arrancar(); // Se intenta apagar un vehículo que no había sido arrancado, generando una excepción
+            });    
+        }
+
+    }
 }
