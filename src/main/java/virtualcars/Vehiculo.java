@@ -11,7 +11,7 @@ public class Vehiculo {
     private boolean esElectrico;
     private int combustibleMax; //Se inicializa con el valor proporcionado en caso de que esElectrico sea false
     private int combustibleActual = 0; 
-    private int tipoCombustible; 
+    private String tipoCombustible; 
     private int bateriaMax; //Se inicializa en 100 en caso de que esElectrico sea true
     private int bateriaActual = 0; 
     private String modoConduccion;
@@ -22,13 +22,13 @@ public class Vehiculo {
     private int numPasajerosActual;
     private int ultimaRevisionITV;  //Se registra únicamente el año de la última revisión
     private int periodoRevisionITV; //En número de años de vigencia desde la última revisión
-    private String matricula;
+    final private String matricula;
 
     // ----- | --------------- Constructores ----------------- | -----
 
     // ----- | ----- Constructor vehículo de combustible ----- | -----
 
-    public Vehiculo(String marca, String modelo, String color, int velocidadMax, int combustibleMax, int tipoCombustible, 
+    public Vehiculo(String marca, String modelo, String color, int velocidadMax, int combustibleMax, String tipoCombustible, 
                     int consumoPorKm, int kmRecorridos, int añoFabricacion, int numPlazas, int ultimaRevisionITV, 
                     int periodoRevisionITV) {
         this.marca = marca;
@@ -110,7 +110,7 @@ public class Vehiculo {
         return combustibleActual;
     }
 
-    public int getTipoCombustible() {
+    public String getTipoCombustible() {
         return tipoCombustible;
     }
 
@@ -195,7 +195,7 @@ public class Vehiculo {
         this.combustibleActual = combustibleActual;
     }
 
-    public void setTipoCombustible(int tipoCombustible) {
+    public void setTipoCombustible(String tipoCombustible) {
         this.tipoCombustible = tipoCombustible;
     }
 
