@@ -138,4 +138,34 @@ class VehiculoTest {
 
     }
 
+    // ---------------------------------------------
+    @Nested
+    @DisplayName("Tests sobre la gestión de la ITV del vehículo")
+    class TestITV {
+
+        @Test
+        @DisplayName("Actualizar la ITV del vehículo")
+        void actualizarITV() {
+            vehiculo.setUltimaRevisionITV(2018);
+            vehiculo.pasarITV();
+            assertEquals(2025, vehiculo.getUltimaRevisionITV());
+        }
+
+        @DisplayName("Verificar un vehículo con la ITV en rigor")
+        void verificarITVActualizada() {
+            vehiculo.setUltimaRevisionITV(2023);
+            vehiculo.setPeriodoRevisionITV(5);
+            assertTrue(vehiculo.verificarITV());
+        }
+
+        @Test
+        @DisplayName("Verificar un vehículo con la ITV caducada")
+        void verificarTIVCaducada() {
+            vehiculo.setUltimaRevisionITV(2015);
+            vehiculo.setPeriodoRevisionITV(3);
+            assertFalse(vehiculo.verificarITV());
+        }
+
+    }
+
 }

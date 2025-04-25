@@ -1,5 +1,6 @@
 package virtualcars;
 
+import java.time.LocalDate;
 import java.util.Random;
 
 public class Vehiculo {
@@ -305,11 +306,20 @@ public class Vehiculo {
     } 
 
     public void pasarITV() {
-        // TODO: Implementar método pasarITV
+        this.ultimaRevisionITV = LocalDate.now().getYear();
     } 
 
-    public void verificarITV() {
-        // TODO: Implementar método verificarITV
+    public boolean verificarITV() {
+        int añoActual = LocalDate.now().getYear();
+        if ((añoActual - this.ultimaRevisionITV ) > this.periodoRevisionITV) {
+            System.out.println("La ITV del vehículo se encuentra caducada. Es necesario realizar pasar la ITV lo antes posible.");
+            return false;
+        } 
+        else
+        {
+            System.out.println("La ITV del vehículo se encuentra en regla.");
+            return true;
+        }
     }
 
     private String generarMatricula() {
