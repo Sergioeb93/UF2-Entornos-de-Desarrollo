@@ -287,8 +287,11 @@ public class Vehiculo {
     } 
 
     public void cargarBateria(int carga) {
+        if (!this.esElectrico) throw new UnsupportedOperationException("Se trata de un vehículo de combustible, no se puede cargar.");
+
         this.bateriaActual += carga;
-        // TODO: Terminar de implementar método cargarBateria
+
+        if (this.bateriaActual > this.bateriaMax) this.bateriaActual = this.bateriaMax; // En caso de superar el máximo, bateriaActual = bateriaMax
     } 
 
     public void cambiarModoConduccion(String modo) {
