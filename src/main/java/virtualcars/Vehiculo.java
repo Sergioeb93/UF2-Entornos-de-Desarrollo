@@ -25,8 +25,13 @@ public class Vehiculo {
     }
 
     public void acelerar(int velocidad) {
+        if (!esActivo) throw new IllegalStateException("El vehículo está apagado, no puede acelerar.");
+        
         this.velocidadActual += velocidad;
+
+        if (this.velocidadActual > velocidadMax) this.velocidadActual = velocidadMax; // En caso de superar el máximo, velocidadActual = velocidadMax
     } 
+
 
     public void decelerar(int velocidad) {
         this.velocidadActual -= velocidad;
