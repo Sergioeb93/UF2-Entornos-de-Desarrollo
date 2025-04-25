@@ -246,8 +246,8 @@ public class Vehiculo {
     // ----- | --------------- Métodos de la clase ---------------- | -----
 
     public void arrancar() {
+        if (this.esAveriado) throw new IllegalStateException("El vehículo se ha averiado, no puede arrancar.");
         this.esActivo = true;
-        // TODO: Terminar de implementar método arrancar
     }
 
     public void acelerar(int velocidad) {
@@ -266,8 +266,14 @@ public class Vehiculo {
     }
 
     public void apagar() {
-        this.esActivo = false;
-        // TODO: Terminar de implementar método apagar
+        if (!this.esActivo) {
+            throw new IllegalStateException("El vehículo ya está apagado.");
+        }
+        else
+        {
+            this.esActivo = false;
+            frenar();
+        }
     }
 
     public void frenar() {
@@ -282,7 +288,7 @@ public class Vehiculo {
     }
 
     public void repostar(int litros, String tipoCombustible) {
-        if (this.esElectrico) throw new UnsupportedOperationException("Se trata de un vehículo eléctrico, no se puede repostar combustible.");
+        if (this.esElectrico) throw new UnsupportedOperationException("Se trata de un vehículo  eléctrico, no se puede repostar combustible.");
         this.combustibleActual += litros;
 
         if (this.combustibleActual > combustibleMax) this.combustibleActual = combustibleMax; // En caso de superar el máximo, combustibleActual = combustibleMax
