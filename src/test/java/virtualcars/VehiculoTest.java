@@ -116,4 +116,26 @@ class VehiculoTest {
         }
     }
 
+    // ---------------------------------------------
+    @Nested
+    @DisplayName("Tests sobre la matrícula del vehículo")
+    class TestMatricula {
+
+        @Test
+        @DisplayName("Generar una matrícula durante la construcción del objeto")
+        void generarMatricula() {
+            assertNotNull(vehiculo.getMatricula()); // El constructor del vehículo debe haber generado una matrícula automáticamente.
+        }
+
+        @Test
+        @DisplayName("Verificar la longitud y el formato de la matrícula generada")
+        void verificarFormatoMatricula() {
+            assertAll("Verificando el formato de la matrícula generada:",
+                () -> assertEquals(6, vehiculo.getMatricula().length(), "La longitud de la matrícula generada debe ser de 6 caracteres."),
+                () -> assertTrue(vehiculo.getMatricula().matches("([A-Z][0-9]){3}"), "La matrícula debe estar conformada por 3 letras y 3 dígitos intercalados.")
+            );   
+        }
+
+    }
+
 }
